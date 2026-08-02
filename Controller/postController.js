@@ -12,7 +12,7 @@ export const createPost = async (req, res) => {
         }
         const post = new postModel(newPost);
         await post.save();
-        return res.status(201).json({ message: "Post created successfully", data: post })
+        return res.status(201).json({ data: post })
     } catch (err) {
         return res.status(500).json({ message: "Something went wrong", err });
     }
@@ -28,7 +28,7 @@ export const getPost = async (req, res) => {
         if (!post) {
             return res.status(404).message({ message: "Post not found" })
         }
-        return res.status(200).json({ message: "Post found", data: post })
+        return res.status(200).json({ data: post })
     } catch (err) {
         res.status(500).json({ message: "Something wrong", err });
     }
@@ -41,7 +41,7 @@ export const getPosts = async (req, res) => {
         if (!posts) {
             return res.status(404).json({ message: "No posts found" })
         }
-        return res.status(200).json({ message: "Posts found", data: posts })
+        return res.status(200).json({ data: posts })
     } catch (err) {
         return res.status(500).json({ message: `Something wrong ${err.message}` });
     }
@@ -72,7 +72,7 @@ export const updatePost = async (req, res) => {
         const { userId, title, body } = req.body;
         const toUpdate = { userId, title, body };
         const findAndUpdate = await postModel.findOneAndUpdate({ _id: id }, { ...toUpdate });
-        return res.status(200).json({ message: "Post updated", findAndUpdate });
+        return res.status(200).json({ findAndUpdate });
     } catch (err) {
         return res.status(500).json({ message: `Something went wrong ${err.message}` })
     }
